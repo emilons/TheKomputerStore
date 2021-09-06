@@ -1,0 +1,32 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+.page-header {
+    background-color: rgb(59, 56, 56);
+    color: white;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+.wrapper {
+    display: flex;
+}
+
+.alignLeft {
+    float: left;
+}
+
+.alignRight {
+    float: right;
+}
+
+.btn-group {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+/*
+#bank > button {
+    background-color: forestgreen;
+    color: white;
+}
+*/
