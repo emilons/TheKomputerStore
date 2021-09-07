@@ -25,25 +25,27 @@
                 <h2>Bank</h2>
                 <div class="textbox">
                     <p class="alignLeft">Balance:</p>
-                    <p class="alignRight" id="balanceValue">1000</p>
+                    <div class="wrapper alignRight">
+                        <p id="balanceValue"></p>
+                        <p>Kr</p>
+                    </div>
                 </div>
                 <div style="clear: both;"></div>
-                <button type="button" class="btn btn-success btn-block">Get a loan</button>
+                <button type="button" class="btn btn-success btn-block" id="loanButton">Get a loan</button>
             </section>
             <section id="work" class="col-sm-4">
                 <h2>Work</h2>
                 <div class="textbox">
                     <p class="alignLeft">Pay:</p>
-                    <p class="alignRight" id="payValue">250</p>
+                    <div class="wrapper alignRight">
+                        <p id="payValue"></p>
+                        <p>Kr</p>
+                    </div>
                 </div>
                 <div style="clear: both;"></div>
-                <div class="btn-toolbar" role="toolbar">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-warning" role="group">Deposit</button>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary" role="group">Work</button>
-                    </div>
+                <div class="btn-group btn-block" role="group">
+                    <button type="button" class="btn btn-warning" id="depositButton">Deposit</button>
+                    <button type="button" class="btn btn-primary" id="workButton">Work</button>
                 </div>
             </section>
             <section id="laptops" class="col-sm-4">
