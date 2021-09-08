@@ -44,5 +44,6 @@ const handleDeposit = () => {
     balanceElement.innerHTML = balance;
 }
 
+loanButton.addEventListener("click", handleLoan);
 workButton.addEventListener("click", handleWork);
 depositButton.addEventListener("click", handleDeposit);
