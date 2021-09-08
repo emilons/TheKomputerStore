@@ -22,8 +22,10 @@ if (parseInt(loanElement.innerHTML) > 0) {
     loanBlockElement.style.visibility = "visible";
 }
 
+
 const handleLoan = () => {
-    
+    let maxLoanAmount = parseInt(balanceElement.innerHTML)*2;
+    // if already has a loan...
 }
 
 // Add functionality so that working after a time increases hourlyRate
