@@ -61,18 +61,18 @@ const handleDeposit = () => {
     let loan = parseInt(loanElement.innerHTML);
     if (loan > 0) {
         if (pay >= loan) {
-            balance += pay;
             pay -= loan;
+            balance += pay;
             outstandingLoan = 0;
             loan = 0;
             handleLoanVisibility();
         }
         else {
             loan -= pay;
-            balance += loan;
+            outstandingLoan = loan;
+            //balance += loan;
         }
         loanElement.innerHTML = loan;
-        
     }
     else {
         balance += pay;
