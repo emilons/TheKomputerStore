@@ -1,4 +1,4 @@
-@import "../node_modules/bootstrap/scss/bootstrap";
+/*@import "../node_modules/bootstrap/scss/bootstrap";*/
 
 .page-header {
     background-color: rgb(59, 56, 56);
@@ -19,7 +19,11 @@
     float: right;
 }
 
-.btn-row > button{
+.kr {
+    margin-left: 0.4rem;
+}
+
+.btn-row > button {
     min-width: 45%;
   }
 /*

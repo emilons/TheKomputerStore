@@ -12,26 +12,39 @@ const depositButton = document.getElementById("depositButton");
 
 // ### Bank functionality ###
 let startingBalance = 0;
-let loanTaken = 0;
-loanBlockElement.style.visibility = "hidden";
-
-
-
+let loanAmount = 0;
+loanBlockElement.style.display = "none";
 balanceElement.innerHTML = startingBalance;
-
-loanElement.innerHTML = loanTaken;
-
-
-
-if (parseInt(loanElement.innerHTML) > 0) {
-    loanBlockElement.style.visibility = "visible";
-}
+loanElement.innerHTML = loanAmount;
 
 const handleLoan = () => {
-    let maxLoanAmount = parseInt(balanceElement.innerHTML)*2;
-    // if already has a loan...
+    let balance = parseInt(balanceElement.innerHTML);
+    let maxLoanAmount = 2*balance;
+    if (loanAmount > 0) {
+        let loan = confirm("Cannot grant another loan untill outstanding loan is repaid");
+    }
+    else {
+        let promptMessage = "Please enter loan amount (max: " + maxLoanAmount + ")"
+        let loan = prompt(promptMessage, "" + maxLoanAmount);
+        loanAmount = parseInt(loan);
+        loanElement.innerHTML = loan;
+        balance += loanAmount;
+        balanceElement.innerHTML = balance;
+        loanAmount = 0;
+        handleLoanVisibility();
+    }
 }
 
+// Helper function to set visibility of loan
+const handleLoanVisibility = () => {
+    let visibility = loanBlockElement.style.display;
+    if (visibility === "block") {
+        loanBlockElement.style.display = "none";
+    }
+    else {
+        loanBlockElement.style.display = "block";
+    }
+}
 
 // ### Work functionality ###
 let startingPay = 0;
@@ -49,9 +62,27 @@ const handleWork = () => {
 }
 
 const handleDeposit = () => {
+    // IF HAS LOAN PAY THAT FIRST
     let pay = parseInt(payElement.innerHTML);
     let balance = parseInt(balanceElement.innerHTML);
-    balance += pay;
+    let loan = parseInt(loanElement.innerHTML);
+    if (loan > 0) {
+        if (pay >= loan) {
+            balance += pay;
+            pay -= loan;
+            loan = 0;
+            handleLoanVisibility();
+        }
+        else {
+            loan -= pay;
+            balance += loan;
+        }
+        loanElement.innerHTML = loan;
+        
+    }
+    else {
+        balance += pay;
+    }
     payElement.innerHTML = 0;
     balanceElement.innerHTML = balance;
 }
@@ -63,7 +94,8 @@ let computers = []
 fetch("https://noroff-komputer-store-api.herokuapp.com/computers")
     .then(response => response.json())
     .then(data => computers = data)
-    .then(computers => addComputersToSale(computers));
+    .then(computers => addComputersToSale(computers))
+    .then(() => setDefaultComputerDescription())
 
 
 const addComputersToSale = (computers) => {
@@ -77,10 +109,18 @@ const addComputerToSale = (computer) => {
     computersElement.appendChild(computerElement);
 }
 
+const setDefaultComputerDescription = () => {
+    const computerElement = computers[0];
+    descriptionElement.innerHTML = computerElement.description;
+}
+
 const handleComputerChange = e => {
     const selectedComputer = computers[e.target.selectedIndex];
     descriptionElement.innerHTML = selectedComputer.description;
 }
+
+// ### DISPLAY functionality ###
+
 
 // ### Set event listeners ###
 loanButton.addEventListener("click", handleLoan);
