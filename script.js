@@ -1,4 +1,5 @@
 // ### DOM elements ###
+
 const bankElement = document.getElementById("bank");
 const loanBlockElement = document.getElementById("loanBlock");
 const loanElement = document.getElementById("loanValue");
@@ -11,6 +12,7 @@ const workButton = document.getElementById("workButton");
 const depositButton = document.getElementById("depositButton");
 
 // ### Bank functionality ###
+
 loanBlockElement.style.display = "none";
 balanceElement.innerHTML = 0;
 loanElement.innerHTML = 0;
@@ -45,6 +47,7 @@ const handleLoanVisibility = () => {
 }
 
 // ### Work functionality ###
+
 payElement.innerHTML = 0;
 
 const handleWork = () => {
@@ -55,7 +58,6 @@ const handleWork = () => {
 }
 
 const handleDeposit = () => {
-    // IF HAS LOAN PAY THAT FIRST
     let pay = parseInt(payElement.innerHTML);
     let balance = parseInt(balanceElement.innerHTML);
     let loan = parseInt(loanElement.innerHTML);
@@ -70,7 +72,7 @@ const handleDeposit = () => {
         else {
             loan -= pay;
             outstandingLoan = loan;
-            //balance += loan;
+            
         }
         loanElement.innerHTML = loan;
     }
@@ -90,7 +92,6 @@ fetch("https://noroff-komputer-store-api.herokuapp.com/computers")
     .then(data => computers = data)
     .then(computers => addComputersToSale(computers))
     .then(() => setDefaultComputerDescription())
-
 
 const addComputersToSale = (computers) => {
     computers.forEach(element => addComputerToSale(element));
