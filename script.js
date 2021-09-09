@@ -11,26 +11,24 @@ const workButton = document.getElementById("workButton");
 const depositButton = document.getElementById("depositButton");
 
 // ### Bank functionality ###
-let startingBalance = 0;
-let loanAmount = 0;
 loanBlockElement.style.display = "none";
-balanceElement.innerHTML = startingBalance;
-loanElement.innerHTML = loanAmount;
+balanceElement.innerHTML = 0;
+loanElement.innerHTML = 0;
 
 const handleLoan = () => {
     let balance = parseInt(balanceElement.innerHTML);
     let maxLoanAmount = 2*balance;
-    if (loanAmount > 0) {
+    let outstandingLoan = parseInt(loanElement.innerHTML);
+    if (outstandingLoan > 0) {
         let loan = confirm("Cannot grant another loan untill outstanding loan is repaid");
     }
     else {
         let promptMessage = "Please enter loan amount (max: " + maxLoanAmount + ")"
         let loan = prompt(promptMessage, "" + maxLoanAmount);
-        loanAmount = parseInt(loan);
+        if (loan === null) return;
         loanElement.innerHTML = loan;
-        balance += loanAmount;
+        balance += parseInt(loan);
         balanceElement.innerHTML = balance;
-        loanAmount = 0;
         handleLoanVisibility();
     }
 }
@@ -47,16 +45,11 @@ const handleLoanVisibility = () => {
 }
 
 // ### Work functionality ###
-let startingPay = 0;
-let hourlyRate = 100;
-
-
-payElement.innerHTML = startingPay;
-
-// Add functionality so that working after a time increases hourlyRate
+payElement.innerHTML = 0;
 
 const handleWork = () => {
     let pay = parseInt(payElement.innerHTML);
+    let hourlyRate = 100;
     pay += hourlyRate;
     payElement.innerHTML = pay;
 }
@@ -70,6 +63,7 @@ const handleDeposit = () => {
         if (pay >= loan) {
             balance += pay;
             pay -= loan;
+            outstandingLoan = 0;
             loan = 0;
             handleLoanVisibility();
         }
