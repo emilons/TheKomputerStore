@@ -26,6 +26,11 @@
 .btn-row > button {
     min-width: 45%;
   }
+
+.rowButton {
+    width: 100%;
+}
+
 /*
 #bank > button {
     background-color: forestgreen;

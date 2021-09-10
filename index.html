@@ -22,24 +22,20 @@
         <div class="row">
             <section id="bank" class="col-sm-4">
                 <h2>Bank</h2>
-                <div class="textbox">
-                    <p class="alignLeft">Balance:</p>
-                    <div class="wrapper alignRight">
-                        <p id="balanceValue"></p>
-                        <p class="kr">Kr</p>
+                <div class="row">
+                    <p class="col-sm-6 text-left">Balance:</p>
+                    <div class="col-sm-6 text-right">
+                        <span id="balanceValue"></span>
                     </div>
-                    <div style="clear: both;"></div>
-                    <div id="loanBlock">
-                        <p class="alignLeft">Loan:</p>
-                        <div class="wrapper alignRight">
-                            <p id="loanValue"></p>
-                            <p class="kr">Kr</p>
-                        </div>
+                </div>
+                <div class="row" id="loanBlock">
+                    <p class="col-sm-6 text-left">Loan:</p>
+                    <div class="col-sm-6 text-right">
+                        <p id="loanValue"></p>
                     </div>
-                    <div style="clear: both;"></div>
                 </div>
                 
-                <button type="button" class="btn btn-success btn-block" id="loanButton">Get a loan</button>
+                <button type="button" class="btn btn-success rowButton" id="loanButton">Get a loan</button>
             </section>
             <section id="work" class="col-sm-4">
                 <h2>Work</h2>
@@ -47,7 +43,6 @@
                     <p class="alignLeft">Pay:</p>
                     <div class="wrapper alignRight">
                         <p id="payValue"></p>
-                        <p class="kr">Kr</p>
                     </div>
                 </div>
                 <div style="clear: both;"></div>
@@ -55,6 +50,7 @@
                     <button type="button" class="btn btn-warning text-center alignLeft" id="depositButton">Deposit</button>
                     <button type="button" class="btn btn-primary text-center alignRight" id="workButton">Work</button>
                 </div>
+                <button type="button" class="btn btn-danger text-center rowButton" id="repayButton">Repay loan</button>
             </section>
             <section id="laptops" class="col-sm-4">
                 <h2>Laptops</h2>

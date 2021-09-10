@@ -10,10 +10,12 @@ const descriptionElement = document.getElementById("description");
 const loanButton = document.getElementById("loanButton");
 const workButton = document.getElementById("workButton");
 const depositButton = document.getElementById("depositButton");
+const repayButton = document.getElementById("repayButton");
 
 // ### Bank functionality ###
 
 loanBlockElement.style.display = "none";
+repayButton.style.visibility = "hidden";
 balanceElement.innerText = 0;
 loanElement.innerText = 0;
 
@@ -35,14 +37,20 @@ const handleLoan = () => {
     }
 }
 
-// Helper function to set visibility of loan
+// Helper function to set visibility and styling of loan and loan repayment functionality
 const handleLoanVisibility = () => {
-    let visibility = loanBlockElement.style.display;
-    if (visibility === "block") {
+    let display = loanBlockElement.style.display;
+    if (display === "flex") {
         loanBlockElement.style.display = "none";
+        loanBlockElement.style.marginBottom = "0";
+        repayButton.style.visibility = "hidden";
+        repayButton.style.marginTop = "0";
     }
     else {
-        loanBlockElement.style.display = "block";
+        loanBlockElement.style.display = "flex";
+        loanBlockElement.style.marginBottom = ".4rem";
+        repayButton.style.visibility = "visible";
+        repayButton.style.marginTop = ".5rem";
     }
 }
 
@@ -83,6 +91,26 @@ const handleDeposit = () => {
     balanceElement.innerText = balance;
 }
 
+const handleRepayLoan = () => {
+    let pay = parseInt(payElement.innerText);
+    let balance = parseInt(balanceElement.innerText);
+    let loan = parseInt(loanElement.innerText);
+    if (pay >= loan) {
+        pay -= loan;
+        balance += pay;
+        outstandingLoan = 0;
+        loan = 0;
+        handleLoanVisibility();
+    }
+    else {
+        loan -= pay;
+        outstandingLoan = loan;
+    }
+    loanElement.innerHTML = loan;
+    payElement.innerText = 0;
+    balanceElement.innerText = balance;
+}
+
 // ### Computer functionality ###
 
 let computers = []
@@ -114,7 +142,8 @@ const setDefaultComputerDescription = () => {
     });    
 }
 
-const handleComputerChange = e => {
+// Helper function for handling comupter change, both for computer selection and the buy computer section
+ const handleComputerChange = e => {
     const selectedComputer = computers[e.target.selectedIndex];
     descriptionElement.innerText = "";
     selectedComputer.specs.map(element => {
@@ -124,11 +153,12 @@ const handleComputerChange = e => {
     })
 }
 
-// ### DISPLAY functionality ###
+// ### Buy Laptop functionality ###
 
 
 // ### Set event listeners ###
 loanButton.addEventListener("click", handleLoan);
 workButton.addEventListener("click", handleWork);
 depositButton.addEventListener("click", handleDeposit);
+repayButton.addEventListener("click", handleRepayLoan);
 computersElement.addEventListener("change", handleComputerChange);
