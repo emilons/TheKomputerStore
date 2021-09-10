@@ -14,23 +14,23 @@ const depositButton = document.getElementById("depositButton");
 // ### Bank functionality ###
 
 loanBlockElement.style.display = "none";
-balanceElement.innerHTML = 0;
-loanElement.innerHTML = 0;
+balanceElement.innerText = 0;
+loanElement.innerText = 0;
 
 const handleLoan = () => {
-    let balance = parseInt(balanceElement.innerHTML);
+    let balance = parseInt(balanceElement.innerText);
+    if (balance <= 0) return;
     let maxLoanAmount = 2*balance;
-    let outstandingLoan = parseInt(loanElement.innerHTML);
-    if (outstandingLoan > 0) {
-        let loan = confirm("Cannot grant another loan untill outstanding loan is repaid");
-    }
+    let outstandingLoan = parseInt(loanElement.innerText);
+    if (outstandingLoan > 0) confirm("Cannot grant another loan untill outstanding loan is repaid");
     else {
         let promptMessage = "Please enter loan amount (max: " + maxLoanAmount + ")"
         let loan = prompt(promptMessage, "" + maxLoanAmount);
         if (loan === null) return;
-        loanElement.innerHTML = loan;
+        if (loan > maxLoanAmount) return;
+        loanElement.innerText = loan;
         balance += parseInt(loan);
-        balanceElement.innerHTML = balance;
+        balanceElement.innerText = balance;
         handleLoanVisibility();
     }
 }
@@ -48,39 +48,39 @@ const handleLoanVisibility = () => {
 
 // ### Work functionality ###
 
-payElement.innerHTML = 0;
+payElement.innerText = 0;
 
 const handleWork = () => {
-    let pay = parseInt(payElement.innerHTML);
+    let pay = parseInt(payElement.innerText);
     let hourlyRate = 100;
     pay += hourlyRate;
-    payElement.innerHTML = pay;
+    payElement.innerText = pay;
 }
 
 const handleDeposit = () => {
-    let pay = parseInt(payElement.innerHTML);
-    let balance = parseInt(balanceElement.innerHTML);
-    let loan = parseInt(loanElement.innerHTML);
+    let pay = parseInt(payElement.innerText);
+    let balance = parseInt(balanceElement.innerText);
+    let loan = parseInt(loanElement.innerText);
     if (loan > 0) {
-        if (pay >= loan) {
-            pay -= loan;
-            balance += pay;
+        let interest = 0.1 * pay;
+        pay -= interest;
+        balance += pay;
+        loan -= interest;
+        if (loan == 0) {
             outstandingLoan = 0;
             loan = 0;
             handleLoanVisibility();
         }
         else {
-            loan -= pay;
             outstandingLoan = loan;
-            
         }
-        loanElement.innerHTML = loan;
+        loanElement.innerText = loan;
     }
     else {
         balance += pay;
     }
-    payElement.innerHTML = 0;
-    balanceElement.innerHTML = balance;
+    payElement.innerText = 0;
+    balanceElement.innerText = balance;
 }
 
 // ### Computer functionality ###
@@ -94,7 +94,7 @@ fetch("https://noroff-komputer-store-api.herokuapp.com/computers")
     .then(() => setDefaultComputerDescription())
 
 const addComputersToSale = (computers) => {
-    computers.forEach(element => addComputerToSale(element));
+    computers.map(element => addComputerToSale(element));
 }
 
 const addComputerToSale = (computer) => {
@@ -106,12 +106,22 @@ const addComputerToSale = (computer) => {
 
 const setDefaultComputerDescription = () => {
     const computerElement = computers[0];
-    descriptionElement.innerHTML = computerElement.description;
+    descriptionElement.innerText = "";
+    computerElement.specs.map(element => {
+        const listElement = document.createElement("li");
+        listElement.innerText = element;
+        descriptionElement.appendChild(listElement)
+    });    
 }
 
 const handleComputerChange = e => {
     const selectedComputer = computers[e.target.selectedIndex];
-    descriptionElement.innerHTML = selectedComputer.description;
+    descriptionElement.innerText = "";
+    selectedComputer.specs.map(element => {
+        const listElement = document.createElement("li");
+        listElement.innerText = element;
+        descriptionElement.appendChild(listElement)
+    })
 }
 
 // ### DISPLAY functionality ###
