@@ -16,8 +16,8 @@ const repayButton = document.getElementById("repayButton");
 
 loanBlockElement.style.visibility = "hidden";
 repayButton.style.visibility = "hidden";
-balanceElement.innerText = 0;
-loanElement.innerText = 0;
+balanceElement.innerText = `0 kr`;
+loanElement.innerText = `0 kr`;
 
 const handleLoan = () => {
     let balance = parseInt(balanceElement.innerText);
@@ -30,9 +30,9 @@ const handleLoan = () => {
         let loan = prompt(promptMessage, "" + maxLoanAmount);
         if (loan === null) return;
         if (loan > maxLoanAmount) return;
-        loanElement.innerText = loan;
+        loanElement.innerText = `${loan} kr`;
         balance += parseInt(loan);
-        balanceElement.innerText = balance;
+        balanceElement.innerText = `${balance} kr`;
         handleLoanVisibility();
     }
 }
@@ -56,13 +56,13 @@ const handleLoanVisibility = () => {
 
 // ### Work functionality ###
 
-payElement.innerText = 0;
+payElement.innerText = `0 kr`;
 
 const handleWork = () => {
     let pay = parseInt(payElement.innerText);
     let hourlyRate = 100;
     pay += hourlyRate;
-    payElement.innerText = pay;
+    payElement.innerText = `${pay} kr`;
 }
 
 const handleDeposit = () => {
@@ -83,13 +83,13 @@ const handleDeposit = () => {
         else {
             outstandingLoan = loan;
         }
-        loanElement.innerText = loan;
+        loanElement.innerText = `${loan} kr`;
     }
     else {
         balance += pay;
     }
-    payElement.innerText = 0;
-    balanceElement.innerText = balance;
+    payElement.innerText = `0 kr`;
+    balanceElement.innerText = `${balance} kr`;
 }
 
 const handleRepayLoan = () => {
@@ -107,9 +107,9 @@ const handleRepayLoan = () => {
         loan -= pay;
         outstandingLoan = loan;
     }
-    loanElement.innerHTML = loan;
-    payElement.innerText = 0;
-    balanceElement.innerText = balance;
+    loanElement.innerHTML = `${loan} kr`;
+    payElement.innerText = `0 kr`;
+    balanceElement.innerText = `${balance} kr`;
 }
 
 // ### Computer functionality ###

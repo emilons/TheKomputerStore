@@ -12,8 +12,9 @@
     height: 100%;
 }
 
-.wrapper {
-    display: flex;
+ul {
+    margin-bottom: 0;
+    padding-inline-start: 25px;
 }
 
 .position-absolute {
