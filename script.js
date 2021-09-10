@@ -121,7 +121,7 @@ const handleRepayLoan = () => {
 // ### Computer functionality ###
 
 let computers = []
-let baseUrl = "https://noroff-komputer-store-api.herokuapp.com/"
+const  baseUrl = "https://noroff-komputer-store-api.herokuapp.com/"
 
 fetch(baseUrl + "computers")
     .then(response => response.json())
@@ -141,7 +141,7 @@ const addComputerToSale = (computer) => {
 }
 
 const setDefaultComputer = () => {
-    const computerElement = computers[4];
+    const computerElement = computers[0];
     featuresElement.innerText = "";
     computerElement.specs.map(element => {
         const listElement = document.createElement("li");
@@ -160,7 +160,7 @@ const handleComputerChange = e => {
         listElement.innerText = element;
         featuresElement.appendChild(listElement)
     })
-    //handleSetInfo
+    handleSetInfo(selectedComputer);    
 }
 
 // ### Buy Laptop functionality ###
@@ -182,8 +182,6 @@ const handleSetImage = (computer) => {
         else {
             imageElement.src = baseUrl + imageUrl;
         }
-        
-        //fix image sizing
     });
 }
 
