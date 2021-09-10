@@ -14,7 +14,7 @@ const repayButton = document.getElementById("repayButton");
 
 // ### Bank functionality ###
 
-loanBlockElement.style.display = "none";
+loanBlockElement.style.visibility = "hidden";
 repayButton.style.visibility = "hidden";
 balanceElement.innerText = 0;
 loanElement.innerText = 0;
@@ -39,18 +39,18 @@ const handleLoan = () => {
 
 // Helper function to set visibility and styling of loan and loan repayment functionality
 const handleLoanVisibility = () => {
-    let display = loanBlockElement.style.display;
-    if (display === "flex") {
-        loanBlockElement.style.display = "none";
-        loanBlockElement.style.marginBottom = "0";
+    let visibility = loanBlockElement.style.visibility;
+    if (visibility === "visible") {
+        loanBlockElement.style.visibility = "hidden";
         repayButton.style.visibility = "hidden";
-        repayButton.style.marginTop = "0";
+        // loanBlockElement.style.marginBottom = "0";
+        // repayButton.style.marginBottom = "0";
     }
     else {
-        loanBlockElement.style.display = "flex";
-        loanBlockElement.style.marginBottom = ".4rem";
+        loanBlockElement.style.visibility = "visible";
         repayButton.style.visibility = "visible";
-        repayButton.style.marginTop = ".5rem";
+        // loanBlockElement.style.marginBottom = ".4rem";
+        // repayButton.style.marginBottom = ".5rem";
     }
 }
 
@@ -70,6 +70,7 @@ const handleDeposit = () => {
     let balance = parseInt(balanceElement.innerText);
     let loan = parseInt(loanElement.innerText);
     if (loan > 0) {
+        // fix so loan cant be negative...
         let interest = 0.1 * pay;
         pay -= interest;
         balance += pay;

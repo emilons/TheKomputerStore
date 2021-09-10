@@ -7,28 +7,36 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
+.page-section {
+    background-color: rgb(224, 222, 222);
+    height: 100%;
+}
+
 .wrapper {
     display: flex;
 }
 
-.alignLeft {
-    float: left;
+.position-absolute {
+    bottom: 0;
+    margin-bottom: .5rem;
 }
 
-.alignRight {
-    float: right;
-}
-
-.kr {
-    margin-left: 0.4rem;
-}
-
-.btn-row > button {
+.bottomContainer > button {
     min-width: 45%;
   }
 
 .rowButton {
     width: 100%;
+}
+
+.bottomContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-bottom: 1rem;
 }
 
 /*
