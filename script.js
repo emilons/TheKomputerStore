@@ -80,7 +80,16 @@ const handleDeposit = () => {
         let interest = 0.1 * pay;
         pay -= interest;
         balance += pay;
-        loan -= interest;
+
+        // prevents negative loan if interest is higher than outstanding loan
+        if (interest > loan) {
+            let remainder = interest - loan;
+            loan = 0;
+            balance += remainder;
+        } 
+        else {
+            loan -= interest;
+        }
         if (loan == 0) {
             outstandingLoan = 0;
             loan = 0;
@@ -185,6 +194,9 @@ const handleSetImage = (computer) => {
     });
 }
 
+// I realised from the message on slack that this was not the right approach, so i changed to using placeholder image instead.
+// Kept the function here anyway cause I didn't want to erase it from existence just yet.
+//
 // Handles the broken URL by changing from wrong filetype to correct filetype
 // const handleWrongUrl = (imageUrl) => {
 //     const wrongFileType = imageUrl.substring(imageUrl.indexOf("."))
