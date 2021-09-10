@@ -6,11 +6,17 @@ const loanElement = document.getElementById("loanValue");
 const balanceElement = document.getElementById("balanceValue");
 const payElement = document.getElementById("payValue");
 const computersElement = document.getElementById("computers");
-const descriptionElement = document.getElementById("description");
+const featuresElement = document.getElementById("features");
+const imageElement = document.getElementById("computerImage");
+const nameElement = document.getElementById("computerName");
+const descriptionElement = document.getElementById("computerDescription");
+const priceElement = document.getElementById("computerPrice");
+
 const loanButton = document.getElementById("loanButton");
 const workButton = document.getElementById("workButton");
 const depositButton = document.getElementById("depositButton");
 const repayButton = document.getElementById("repayButton");
+const buyButton = document.getElementById("buyButton");
 
 // ### Bank functionality ###
 
@@ -115,12 +121,13 @@ const handleRepayLoan = () => {
 // ### Computer functionality ###
 
 let computers = []
+let baseUrl = "https://noroff-komputer-store-api.herokuapp.com/"
 
-fetch("https://noroff-komputer-store-api.herokuapp.com/computers")
+fetch(baseUrl + "computers")
     .then(response => response.json())
     .then(data => computers = data)
     .then(computers => addComputersToSale(computers))
-    .then(() => setDefaultComputerDescription())
+    .then(() => setDefaultComputer());
 
 const addComputersToSale = (computers) => {
     computers.map(element => addComputerToSale(element));
@@ -133,29 +140,63 @@ const addComputerToSale = (computer) => {
     computersElement.appendChild(computerElement);
 }
 
-const setDefaultComputerDescription = () => {
-    const computerElement = computers[0];
-    descriptionElement.innerText = "";
+const setDefaultComputer = () => {
+    const computerElement = computers[4];
+    featuresElement.innerText = "";
     computerElement.specs.map(element => {
         const listElement = document.createElement("li");
         listElement.innerText = element;
-        descriptionElement.appendChild(listElement)
-    });    
+        featuresElement.appendChild(listElement)
+    })
+    handleSetInfo(computerElement);    
 }
 
 // Helper function for handling comupter change, both for computer selection and the buy computer section
- const handleComputerChange = e => {
+const handleComputerChange = e => {
     const selectedComputer = computers[e.target.selectedIndex];
-    descriptionElement.innerText = "";
+    featuresElement.innerText = "";
     selectedComputer.specs.map(element => {
         const listElement = document.createElement("li");
         listElement.innerText = element;
-        descriptionElement.appendChild(listElement)
+        featuresElement.appendChild(listElement)
     })
+    //handleSetInfo
 }
 
 // ### Buy Laptop functionality ###
 
+//const handleSetInfo which sets image, name, desc etc
+const handleSetInfo = (computer) => {
+    handleSetImage(computer);
+    nameElement.innerText = computer.title;
+    descriptionElement.innerText = computer.description;
+    priceElement.innerText = `${computer.price} NOK`;
+} 
+
+const handleSetImage = (computer) => {
+    let imageUrl = computer.image;
+    fetch(baseUrl + imageUrl).then((response) => {
+        if (!response.ok) {
+            imageElement.src = "placeholder.png"
+        }
+        else {
+            imageElement.src = baseUrl + imageUrl;
+        }
+        
+        //fix image sizing
+    });
+}
+
+// Handles the broken URL by changing from wrong filetype to correct filetype
+// const handleWrongUrl = (imageUrl) => {
+//     const wrongFileType = imageUrl.substring(imageUrl.indexOf("."))
+//     const rightFileType = (wrongFileType === ".png") ? ".jpg" : ".png";
+//     return newImageUrl = imageUrl.substring(0,imageUrl.indexOf(".")) + rightFileType;
+// }
+
+const handleBuyNow = () => {
+
+}
 
 // ### Set event listeners ###
 loanButton.addEventListener("click", handleLoan);
@@ -163,3 +204,4 @@ workButton.addEventListener("click", handleWork);
 depositButton.addEventListener("click", handleDeposit);
 repayButton.addEventListener("click", handleRepayLoan);
 computersElement.addEventListener("change", handleComputerChange);
+buyButton.addEventListener("click", handleBuyNow);

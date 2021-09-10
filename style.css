@@ -17,6 +17,11 @@ ul {
     padding-inline-start: 25px;
 }
 
+img {
+    height: 200px;
+    width: 200px;
+}
+
 .position-absolute {
     bottom: 0;
     margin-bottom: .5rem;
