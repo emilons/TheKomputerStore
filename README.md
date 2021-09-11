@@ -4,6 +4,8 @@ This is my submission for the first assignment in the frontend module of the Nor
 
 The goal of the assignment is to build a dynamic webpage using "vanilla" JavaScript.
 
+Link to GitHub Pages: https://emilons.github.io/TheKomputerStore/
+
 ## File Structure
 ```bash
 └───TheKomputerStore
