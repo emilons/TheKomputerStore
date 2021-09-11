@@ -218,7 +218,7 @@ const handleBuyNow = () => {
     if (balance >= price) {
         balance -= price;
         balanceElement.innerText = `${balance} kr`;
-        confirm("Congratulations! You are the new owner of " + `${title}`);
+        confirm("Congratulations! You are the new owner of " + `${title}.`);
     }
     else {
         confirm("Insufficient bank balance.");

@@ -1,4 +1,7 @@
 /*@import "../node_modules/bootstrap/scss/bootstrap";*/
+body {
+    background-color: rgb(224, 222, 222);;
+}
 
 .page-header {
     background-color: rgb(59, 56, 56);
@@ -8,7 +11,7 @@
 }
 
 .page-section {
-    background-color: rgb(224, 222, 222);
+    background-color: white;
     height: 100%;
 }
 
