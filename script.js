@@ -25,6 +25,7 @@ repayButton.style.visibility = "hidden";
 balanceElement.innerText = `0 kr`;
 loanElement.innerText = `0 kr`;
 
+// Handles the process of being granted a loan
 const handleLoan = () => {
     let balance = parseInt(balanceElement.innerText);
     if (balance <= 0) return;
@@ -43,20 +44,16 @@ const handleLoan = () => {
     }
 }
 
-// Helper function to set visibility and styling of loan and loan repayment functionality
+// Helper function to set visibility of loan and loan repayment functionality
 const handleLoanVisibility = () => {
     let visibility = loanBlockElement.style.visibility;
     if (visibility === "visible") {
         loanBlockElement.style.visibility = "hidden";
         repayButton.style.visibility = "hidden";
-        // loanBlockElement.style.marginBottom = "0";
-        // repayButton.style.marginBottom = "0";
     }
     else {
         loanBlockElement.style.visibility = "visible";
         repayButton.style.visibility = "visible";
-        // loanBlockElement.style.marginBottom = ".4rem";
-        // repayButton.style.marginBottom = ".5rem";
     }
 }
 
@@ -64,6 +61,7 @@ const handleLoanVisibility = () => {
 
 payElement.innerText = `0 kr`;
 
+// Handles working, earning 100 Kr on each click
 const handleWork = () => {
     let pay = parseInt(payElement.innerText);
     let hourlyRate = 100;
@@ -71,12 +69,12 @@ const handleWork = () => {
     payElement.innerText = `${pay} kr`;
 }
 
+// Handles the deposit of pay, taking 10 % of the pay as a down payment if user has an outstanding loan
 const handleDeposit = () => {
     let pay = parseInt(payElement.innerText);
     let balance = parseInt(balanceElement.innerText);
     let loan = parseInt(loanElement.innerText);
     if (loan > 0) {
-        // fix so loan cant be negative...
         let interest = 0.1 * pay;
         pay -= interest;
         balance += pay;
@@ -107,6 +105,7 @@ const handleDeposit = () => {
     balanceElement.innerText = `${balance} kr`;
 }
 
+// Handles handles repayment of loan
 const handleRepayLoan = () => {
     let pay = parseInt(payElement.innerText);
     let balance = parseInt(balanceElement.innerText);
@@ -132,16 +131,20 @@ const handleRepayLoan = () => {
 let computers = []
 const  baseUrl = "https://noroff-komputer-store-api.herokuapp.com/"
 
+// Fetches the data on the computers from an external API
 fetch(baseUrl + "computers")
     .then(response => response.json())
     .then(data => computers = data)
     .then(computers => addComputersToSale(computers))
     .then(() => setDefaultComputer());
 
+
+// Helper function which adds all the computers to the selection on the web page
 const addComputersToSale = (computers) => {
     computers.map(element => addComputerToSale(element));
 }
 
+// Helper function which adds one computer to a selection on the web page
 const addComputerToSale = (computer) => {
     const computerElement = document.createElement("option");
     computerElement.value = computer.id;
@@ -149,6 +152,7 @@ const addComputerToSale = (computer) => {
     computersElement.appendChild(computerElement);
 }
 
+// Helper function which sets the default computer on page load
 const setDefaultComputer = () => {
     const computerElement = computers[0];
     featuresElement.innerText = "";
@@ -160,7 +164,7 @@ const setDefaultComputer = () => {
     handleSetInfo(computerElement);    
 }
 
-// Helper function for handling comupter change, both for computer selection and the buy computer section
+// Helper function which handles comupter change, both for laptop selection and the buy computer section
 const handleComputerChange = e => {
     const selectedComputer = computers[e.target.selectedIndex];
     featuresElement.innerText = "";
@@ -174,7 +178,7 @@ const handleComputerChange = e => {
 
 // ### Buy Laptop functionality ###
 
-//const handleSetInfo which sets image, name, desc etc
+// Helper function which handles setting name, description and price of the computer
 const handleSetInfo = (computer) => {
     handleSetImage(computer);
     nameElement.innerText = computer.title;
@@ -182,6 +186,7 @@ const handleSetInfo = (computer) => {
     priceElement.innerText = `${computer.price} NOK`;
 } 
 
+// Helper function which handles setting the image of the computer
 const handleSetImage = (computer) => {
     let imageUrl = computer.image;
     fetch(baseUrl + imageUrl).then((response) => {
@@ -204,8 +209,20 @@ const handleSetImage = (computer) => {
 //     return newImageUrl = imageUrl.substring(0,imageUrl.indexOf(".")) + rightFileType;
 // }
 
+// Handles the purchase of a computer
 const handleBuyNow = () => {
-
+    console.log("here")
+    let title = nameElement.innerText;
+    let price = parseInt(priceElement.innerText);
+    let balance = parseInt(balanceElement.innerText);
+    if (balance >= price) {
+        balance -= price;
+        balanceElement.innerText = `${balance} kr`;
+        confirm("Congratulations! You are the new owner of " + `${title}`);
+    }
+    else {
+        confirm("Insufficient bank balance.");
+    }
 }
 
 // ### Set event listeners ###
